@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Firebase</string>
+
+    <!-- fragment_message -->
+    <string name="input_message">Enter the message ....</string>
+
+
+
 </resources>
