@@ -139,6 +139,6 @@ public class MessageFragment extends Fragment {
 
         messageFragmentAdapter.swapData(message);
         messageFragmentAdapter.notifyDataSetChanged();
-        recyclerView.smoothScrollToPosition(messageFragmentAdapter.getItemCount()-1);
+        if(messageFragmentAdapter.getItemCount() != 0 ) recyclerView.smoothScrollToPosition(messageFragmentAdapter.getItemCount()-1);
     }
 }

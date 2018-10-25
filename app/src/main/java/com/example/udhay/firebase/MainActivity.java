@@ -32,11 +32,11 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
 
     //View instances
-    @BindView(R.id.fragment_view_pager) ViewPager viewPager;
+    @Nullable @BindView(R.id.fragment_view_pager) ViewPager viewPager;
 
-    @BindView(R.id.tab_layout) TabLayout tablayout;
+    @Nullable @BindView(R.id.tab_layout) TabLayout tablayout;
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
+    @Nullable @BindView(R.id.toolbar) Toolbar toolbar;
 
     //Request code
     private static final int SIGN_IN_REQUEST_CODE = 123;

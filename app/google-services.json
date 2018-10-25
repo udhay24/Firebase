@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "1025092301535-rl5n8kdh1smn4ebvq70nt2fh35dllpcj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.udhay.firebase",
+            "certificate_hash": "018d02156ef57de1c21c665004ca166e6d2595f7"
+          }
+        },
+        {
           "client_id": "1025092301535-tjnc7a5rdojvt2plj00o16b5hj5kgai3.apps.googleusercontent.com",
           "client_type": 3
         }
