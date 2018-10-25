@@ -1,5 +1,7 @@
 package com.example.udhay.firebase;
 
+import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -83,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.log_out:
                 firebaseAuth.signOut();
                 signInScreen();
-                Toast.makeText(this, "Successfully Signed Out", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Successfully Signed Out" , Toast.LENGTH_SHORT).show();
                 return true;
 
                 default:
@@ -98,5 +100,18 @@ public class MainActivity extends AppCompatActivity {
                         new AuthUI.IdpConfig.GoogleBuilder().build()))
                 .setIsSmartLockEnabled(false)
                 .build(), SIGN_IN_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if(requestCode == SIGN_IN_REQUEST_CODE){
+            if(requestCode == RESULT_OK){
+                setUpScreenView();
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 }
