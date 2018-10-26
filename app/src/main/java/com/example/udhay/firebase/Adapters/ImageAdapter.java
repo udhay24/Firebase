@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.example.udhay.firebase.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -41,11 +42,18 @@ public class ImageAdapter extends BaseAdapter {
 
         if(convertView == null){
             ImageView imageView = new ImageView(parent.getContext());
-            imageView.setAdjustViewBounds(true);
+            imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 360));
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setPadding(0, 1, 1, 0);
             convertView = imageView;
         }
 
-        Picasso.get().load(imageUri).fit().into((ImageView) convertView);
+        Picasso.get().load(imageUri).placeholder(R.drawable.ic_launcher_foreground).fit().into((ImageView) convertView);
         return convertView;
+    }
+
+
+    public void swapData(ArrayList<Uri> newData){
+        imageUris = newData;
     }
 }

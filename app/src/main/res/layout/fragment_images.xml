@@ -10,10 +10,11 @@
       android:id="@+id/grid_image_view"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:horizontalSpacing="10dp"
-      android:verticalSpacing="10dp"
+      android:horizontalSpacing="2dp"
+      android:verticalSpacing="2dp"
       android:numColumns="auto_fit"
-      android:columnWidth="120dp"/>
+      android:columnWidth="120dp"
+      />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_image"

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -20,12 +21,17 @@ import com.example.udhay.firebase.Adapters.ImageAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -77,6 +83,21 @@ public class ImagesFragment extends Fragment {
 
         ButterKnife.bind(this , view);
 
+        imageAdapter = new ImageAdapter(new ArrayList<Uri>());
+
+        gridView.setAdapter(imageAdapter);
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                updateAdapter(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         return view;
 
@@ -116,7 +137,7 @@ public class ImagesFragment extends Fragment {
     private void uploadData(final Uri uri){
         final AlertDialog alertDialog = new AlertDialog.Builder(ImagesFragment.this.getContext()).create();
 
-        storageReference =  firebaseStorage.getReference().child(firebaseUser.getUid()+"/"+uri.getLastPathSegment());
+        storageReference =  firebaseStorage.getReference().child(firebaseUser.getUid()+"/images/"+uri.getLastPathSegment());
         Log.v("Last URI",  uri.getLastPathSegment());
         storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -139,5 +160,16 @@ public class ImagesFragment extends Fragment {
                 alertDialog.show();
             }
         });
+    }
+
+
+    private void updateAdapter(DataSnapshot dataSnapshot){
+        ArrayList<Uri> uris = new ArrayList<>();
+        for (DataSnapshot data : dataSnapshot.getChildren()) {
+            uris.add(Uri.parse(data.getValue().toString()));
+        }
+
+        imageAdapter.swapData(uris);
+        imageAdapter.notifyDataSetChanged();
     }
 }
