@@ -2,6 +2,7 @@ package com.example.udhay.firebase;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,9 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.udhay.firebase.Adapters.ImageAdapter;
+import com.firebase.ui.auth.ui.ProgressView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -135,29 +138,46 @@ public class ImagesFragment extends Fragment {
     }
 
     private void uploadData(final Uri uri){
-        final AlertDialog alertDialog = new AlertDialog.Builder(ImagesFragment.this.getContext()).create();
+
+        final ProgressDialog progressDialog = ProgressDialog.show(ImagesFragment.this.getContext() , "Uploading Image" , "data streamed..." ,
+                true);
+
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setMax(100);
 
         storageReference =  firebaseStorage.getReference().child(firebaseUser.getUid()+"/images/"+uri.getLastPathSegment());
-        Log.v("Last URI",  uri.getLastPathSegment());
+
         storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
                 Toast.makeText(ImagesFragment.this.getContext(), "Upload Success", Toast.LENGTH_SHORT).show();
+
                 storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
                     @Override
                     public void onSuccess(Uri uri1) {
+
                         databaseReference.child(uri.getLastPathSegment()).setValue(uri1.toString());
+
                     }
                 });
-                alertDialog.cancel();
+                progressDialog.dismiss();
+
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+
             @Override
             public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+
                 long dataTransferred = taskSnapshot.getBytesTransferred();
+
                 long totalData = taskSnapshot.getTotalByteCount();
-                alertDialog. setMessage(" Data Uploaded " + dataTransferred);
-                alertDialog.show();
+
+                progressDialog.setProgress((int)(100*(dataTransferred/totalData)));
+
+
             }
         });
     }
