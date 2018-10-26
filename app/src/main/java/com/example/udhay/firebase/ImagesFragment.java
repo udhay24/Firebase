@@ -13,11 +13,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.Toast;
 
+import com.example.udhay.firebase.Adapters.ImageAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -38,9 +42,16 @@ public class ImagesFragment extends Fragment {
     private FirebaseUser firebaseUser;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
 
     @Nullable @BindView(R.id.add_image)
     FloatingActionButton addButton;
+
+    @Nullable @BindView(R.id.grid_image_view)
+    GridView gridView;
+
+    ImageAdapter imageAdapter;
 
     public ImagesFragment() {
         // Required empty public constructor
@@ -54,7 +65,8 @@ public class ImagesFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         firebaseStorage = FirebaseStorage.getInstance();
-        storageReference = firebaseStorage.getReference();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference(firebaseUser.getUid()+"/images");
     }
 
     @Override
@@ -64,6 +76,7 @@ public class ImagesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_images, container, false);
 
         ButterKnife.bind(this , view);
+
 
         return view;
 
@@ -100,20 +113,28 @@ public class ImagesFragment extends Fragment {
         }
     }
 
-    private void uploadData(Uri uri){
+    private void uploadData(final Uri uri){
         final AlertDialog alertDialog = new AlertDialog.Builder(ImagesFragment.this.getContext()).create();
 
-        storageReference.child(uri.getLastPathSegment());
+        storageReference =  firebaseStorage.getReference().child(firebaseUser.getUid()+"/"+uri.getLastPathSegment());
+        Log.v("Last URI",  uri.getLastPathSegment());
         storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Toast.makeText(ImagesFragment.this.getContext(), "Upload Success", Toast.LENGTH_SHORT).show();
+                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri1) {
+                        databaseReference.child(uri.getLastPathSegment()).setValue(uri1.toString());
+                    }
+                });
                 alertDialog.cancel();
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                 long dataTransferred = taskSnapshot.getBytesTransferred();
+                long totalData = taskSnapshot.getTotalByteCount();
                 alertDialog. setMessage(" Data Uploaded " + dataTransferred);
                 alertDialog.show();
             }

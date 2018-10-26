@@ -6,7 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".ImagesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+  <GridView
+      android:id="@+id/grid_image_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:horizontalSpacing="10dp"
+      android:verticalSpacing="10dp"
+      android:numColumns="auto_fit"
+      android:columnWidth="120dp"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_image"

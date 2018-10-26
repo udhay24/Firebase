@@ -102,7 +102,7 @@ public class MessageFragment extends Fragment {
         firebaseauth = FirebaseAuth.getInstance();
         firebaseUser = firebaseauth.getCurrentUser();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference(firebaseUser.getUid());
+        databaseReference = firebaseDatabase.getReference(firebaseUser.getUid()+"/messages");
 
         messageFragmentAdapter = new MessageFragmentAdapter(this.getContext() , new ArrayList<String>());
 
