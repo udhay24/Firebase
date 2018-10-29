@@ -8,11 +8,12 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import com.example.udhay.firebase.DocumentFragment;
 import com.example.udhay.firebase.ImagesFragment;
 import com.example.udhay.firebase.MessageFragment;
+import com.example.udhay.firebase.TextRecognitionFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
 
-    public static final String[] tabLayoutTitle = new String[]{"Messages" , "Images" , "Documents"};
+    public static final String[] tabLayoutTitle = new String[]{"Messages" , "Images" , "Documents" , "Text recognition"};
 
     public ViewPagerAdapter(FragmentManager fragmentManager){
         super(fragmentManager);
@@ -28,6 +29,8 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
                 return new ImagesFragment();
             case 2:
                 return new DocumentFragment();
+            case 3:
+                return new TextRecognitionFragment();
 
                 default:
                     return new MessageFragment();
@@ -38,7 +41,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
     @Nullable

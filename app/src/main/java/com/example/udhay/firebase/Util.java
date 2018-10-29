@@ -15,7 +15,7 @@ public class Util {
     }
 
     public static String checkName(String name){
-        String finalString = name.replaceAll("[^.,a-zA-Z0-9]+","");
+        String finalString = name.replaceAll("[^a-zA-Z0-9]+","");
         return finalString;
 
     }

@@ -145,7 +145,7 @@ public class ImagesFragment extends Fragment {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setMax(100);
 
-        storageReference =  firebaseStorage.getReference().child(firebaseUser.getUid()+"/images/"+uri.getLastPathSegment());
+        storageReference =  firebaseStorage.getReference().child(firebaseUser.getUid()+"/images/"+Util.getNameFromUri(this.getContext() , uri));
 
         storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
 
@@ -159,7 +159,7 @@ public class ImagesFragment extends Fragment {
                     @Override
                     public void onSuccess(Uri uri1) {
 
-                        databaseReference.child(uri.getLastPathSegment()).setValue(uri1.toString());
+                        databaseReference.child(Util.getNameFromUri(ImagesFragment.this.getContext() , uri)).setValue(uri1.toString());
 
                     }
                 });
