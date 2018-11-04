@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.udhay.firebase.Adapters.ViewPagerAdapter;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MobileAds.initialize(this , "ca-app-pub-6493781373047426~7120632968");
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
