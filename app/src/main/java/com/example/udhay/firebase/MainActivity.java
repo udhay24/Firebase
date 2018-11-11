@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.example.udhay.firebase.Adapters.ViewPagerAdapter;
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -25,6 +24,7 @@ import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,13 +48,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+        //MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
         ButterKnife.bind(this);
 
+        Timber.plant(new Timber.DebugTree());
         setSupportActionBar(toolbar);
 
         if(firebaseUser == null){

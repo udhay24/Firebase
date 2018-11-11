@@ -2,7 +2,6 @@ package com.example.udhay.firebase;
 
 
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,8 +15,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.udhay.firebase.Adapters.MessageFragmentAdapter;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,10 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 
 import butterknife.BindView;
@@ -69,7 +63,7 @@ public class MessageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_message, container, false);;
+        View view = inflater.inflate(R.layout.fragment_message, container, false);
 
         ButterKnife.bind(this , view);
 
@@ -115,9 +109,6 @@ public class MessageFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        AdView adView = getView().findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
 
     }
 

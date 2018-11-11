@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
+
 
 android {
     compileSdkVersion 28
@@ -38,7 +38,9 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.google.firebase:firebase-ml-vision:18.0.1'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5'
-    implementation 'com.google.android.gms:play-services-ads:17.0.0'
-    implementation 'com.google.firebase:firebase-ads:17.0.0'
+    //implementation 'com.google.android.gms:play-services-ads:17.0.0'
+//    implementation 'com.google.firebase:firebase-ads:17.0.0'
+
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 }
 apply plugin: 'com.google.gms.google-services'
